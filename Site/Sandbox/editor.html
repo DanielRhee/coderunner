@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="Site/Sandbox/editor.css">
+
+        <title>Hello</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        
+    </head>
+    <body style="background-color:#4b4b4b;">
+
+        <div id="header"> Ripoff Replit/codiva </div>
+
+        <div id="control-panel">
+            
+            <div id="row">
+                <div class="column">
+                    <p>File name for later</p>
+                </div>
+                <div class="column">
+                    <div id="executeCodeWrapper">
+                        <button id="executeCodeButton" onclick="executeCode()"> Run </button>
+                    </div>
+                </div>
+                <div class="column">
+                    <div id="languageSelectWrapper">
+                        Select Language:
+                        &nbsp; &nbsp;
+                        <select id="languageSelector" onchange="changeLanguage()">
+                            <option value="python"> Python </option>
+                            <option value="c"> C </option>
+                            <option value="cpp"> C++ </option>
+                            <option value="java"> Java </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            
+        </div>
+        <div id="editorWrapper">
+            <div class="editor" id="editor"></div>
+        </div>
+        
+    
+
+        <div id="codeExecutionOutputWrapper"><p id="codeExecutionOutput">Code output:</p></div> 
+        
+        <script src="Site/aceEditor/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="Site/Sandbox/editor.js"></script>
+
+    </body>
+</html>

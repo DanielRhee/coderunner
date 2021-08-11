@@ -1,0 +1,115 @@
+*{margin: 0;}
+.sidenav {
+    height: 100%;
+    
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    
+}
+  
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+  
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+  
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+  
+#main {
+    transition: margin-left .5s;
+}
+  
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+#header {
+    background: #4b4b4b;
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    padding: 4px;
+    font-family: sans-serif;
+    height: 28px;
+}
+
+#control-panel {
+    background: lightgray;
+    padding: 4px;
+    font-family: sans-serif;
+    overflow: auto;
+    height: 28px;
+}
+
+#row:after {
+    content: "";
+    display: table;
+    clear: both;
+    justify-content: center;
+}
+.column {
+    float: left;
+    width: 33%;
+    height: 28px;
+    border: 0%;
+}
+
+#languageSelectWrapper {
+    float: right;
+    padding-top: 0%;
+}
+
+#executeCodeButton {
+    background: #57a958;
+    color: white;
+    padding: 6px;
+    border: 0;
+}
+
+#submitCodeButton {
+    background: #57a958;
+    color: white;
+    padding: 6px;
+    border: 0;
+}
+
+#executeCodeWrapper {
+    float: center;
+    text-align: center;
+    overflow:visible;
+}
+
+#editor { 
+    height: 400px;
+}
+#codeExecutionOutputWrapper {
+    padding: 1%;
+    height: 100%;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    background: #4b4b4b;
+    overflow:scroll;
+    color: white;
+
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <title id="problemName">{{problemName}}</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../Site/problems/problemDisplay/problemDisplay.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    </head>
+    <body style="background-color:#4b4b4b;" onload="startEnvironment()">
+
+        <div id="header"> Ripoff Replit/codiva </div>
+        
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <p id="problemStatement" style="color:white; padding:3%;">{{problemName}} <br><br><br> {{problemText}}</p>
+        </div>
+
+        
+        
+        <div id="main">
+            
+            <div id="control-panel">
+            
+                <div id="row">
+                    <div class="column">
+                        <span style="cursor:pointer" onclick="openNav()">&#9776; Problem text</span>
+                    </div>
+                    <div class="column">
+                        <div id="executeCodeWrapper">
+                            <button id="executeCodeButton" onclick="runCode()"> Run </button>
+                            <button id="submitCodeButton" onclick="submitCode()"> Submit </button>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div id="languageSelectWrapper">
+                            Select Language:
+                            &nbsp; &nbsp;
+                            <select id="languageSelector" onchange="changeLanguage()">
+                                <option value="python"> Python </option>
+                                <option value="c"> C </option>
+                                <option value="cpp"> C++ </option>
+                                <option value="java"> Java </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+    
+    
+                
+            </div>
+            <div id="editorWrapper">
+                <div class="editor" id="editor"></div>
+            </div>
+            
+        
+    
+            <div id="codeExecutionOutputWrapper"><p id="codeExecutionOutput">Code output: &nbsp; </p></div> 
+            
+        </div>
+        
+        <script src="../Site/aceEditor/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../Site/problems/problemDisplay/problemDisplay.js"></script>
+        
+    </body>
+</html> 

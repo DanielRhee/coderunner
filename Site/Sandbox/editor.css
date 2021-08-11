@@ -1,0 +1,67 @@
+*{margin: 0;}
+
+#header {
+    background: #4b4b4b;
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    padding: 4px;
+    font-family: sans-serif;
+    height: 28px;
+}
+
+#control-panel {
+    background: lightgray;
+    padding: 4px;
+    font-family: sans-serif;
+    overflow: auto;
+    height: 28px;
+}
+
+#row:after {
+    content: "";
+    display: table;
+    clear: both;
+    justify-content: center;
+}
+.column {
+    float: left;
+    width: 33%;
+    height: 28px;
+    border: 0%;
+}
+
+#languageSelectWrapper {
+    float: right;
+    padding-top: 0%;
+}
+
+#executeCodeButton {
+    background: #57a958;
+    color: white;
+    padding: 6px;
+    border: 0;
+}
+
+#executeCodeWrapper {
+    float: center;
+    text-align: center;
+    overflow:visible;
+}
+
+#editor { 
+    height: 400px;
+}
+#codeExecutionOutputWrapper {
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 2px;
+    height: 99px;
+    width: 98%;
+    background: #4b4b4b;
+    overflow:scroll;
+    color: white;
+
+}
