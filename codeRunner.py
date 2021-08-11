@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-def runCode(lang, code, codeInput, filename):
+def runCode(lang, code, codeInput, filename="filename"):
     import random
     alphabet="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     randomString = ""
@@ -106,7 +106,7 @@ def runCode(lang, code, codeInput, filename):
         arr = bytes.decode(out).split("\n")
         for i in range(len(arr)):
             arr[i] = arr[i] +"\n"
-        print(arr)
+        #print(arr)
         out = "/n ".join(arr)
         #print(out1)
         #print("yo")

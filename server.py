@@ -41,125 +41,17 @@ def runProblemNoJudging():
         global problemSet
         getLanguage = request.headers["language"]
         getProblem = request.headers["problemName"]
-        import random
-        alphabet="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        randomString = ""
-        for i in range(50):
-            randomString += alphabet[random.randint(0,len(alphabet)-1)]
         #get the data and store it
         clientCode = request.get_data()
 
-        if getLanguage == "python":
-            f = open(randomString+".py","w")
-            #turn binary into normal stuff and write it
-            f.write(bytes.decode(clientCode))
-            f.close()
-
-            #print(str(problemSet[getProblem][2][0]))
-            result = subprocess.Popen(["python3", randomString +".py"], stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-            #print(''.join(list(map(str,problemSet[getProblem][2][0][0]))).encode())
-            result.stdin.write(''.join(list(map(str,problemSet["TwoSum"][2][0][0]))).encode())
-            #result.stdin.write(''.join(list(map(str,problemSet[getProblem][2][0][0]))).encode())
-            out, err = result.communicate()
-
-            #process = subprocess.Popen("python3 " + randomString +".py", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            #out, err = process.communicate()
-            #errcode = process.returncode   
-            os.remove(randomString+".py")   
-
-        elif getLanguage == "cpp":
-            f = open(randomString+".cpp","w")
-            #turn binary into normal stuff and write it
-            f.write(bytes.decode(clientCode))
-            f.close()
-
-            process = subprocess.Popen("g++ -o ./" + randomString +" ./" + randomString + ".cpp", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = process.communicate()
-            #print(err)
-
-            result = subprocess.Popen(["./" + randomString], stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-            result.stdin.write(' '.join(list(map(str,problemSet[getProblem][2][0][0]))).encode())
-            out, err = result.communicate()
-
-            """
-            process = subprocess.Popen("./" + randomString, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = process.communicate()
-            errcode = process.returncode   
-            """
-            os.remove(randomString+".cpp") 
-            try:
-                os.remove(randomString)
-            except: 
-                1+1
-
-        elif getLanguage == "c":
-            f = open(randomString+".c","w")
-            #turn binary into normal stuff and write it
-            f.write(bytes.decode(clientCode))
-            f.close()
-
-            process = subprocess.Popen("g++ -o ./" + randomString +" ./" + randomString + ".c", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = process.communicate()
-            #print(err)
-            result = subprocess.Popen(["./" + randomString], stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-            result.stdin.write(' '.join(list(map(str,problemSet[getProblem][2][0][0]))).encode())
-            out, err = result.communicate()
-            """process = subprocess.Popen("./" + randomString, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = process.communicate()"""
-            errcode = process.returncode   
-            os.remove(randomString+".c") 
-            try:
-                os.remove(randomString)
-            except: 
-                1+1
-
-        elif getLanguage == "java":
-            f = open(randomString+".java","w")
-            #turn binary into normal stuff and write it
-            writeToFileTemp = bytes.decode(clientCode)
-            #print(writeToFileTemp.count("class Main"))
-            writeToFileTemp = writeToFileTemp.replace("class Main", "class "+randomString)
-            writeToFileTemp = writeToFileTemp.replace("class main", "class "+randomString)
-            f.write(writeToFileTemp)
-            #f.write("public class " + randomString)
-            f.close()
+        try:
+            return render_template("output.html", codeOutput= "Your Output: /n" + codeRunner.runCode(getLanguage, request.get_data() , ''.join(list(map(str,problemSet[getProblem][2][0][0]))), getProblem) + "Expected Output: /n" + str(problemSet[getProblem][2][0][1]))
+        except:
+            return render_template("output.html", codeOutput="An error occured, please try again later or if the issue persists the code broke lol. Also make sure you chose the right language.")
         
-            process = subprocess.Popen("javac " + randomString +".java", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = process.communicate()
+        #return render_template("editor.html", content="out"+count)
 
-            result = subprocess.Popen(["java", randomString], stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-            result.stdin.write(str(' '.join(list(map(str,problemSet[getProblem][2][0][0])))).encode())
-            out, err = result.communicate()
-
-            """
-            process = subprocess.Popen("java " + randomString , shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = process.communicate()"""
-            errcode = process.returncode   
-            
-            os.remove(randomString+".java") 
-            try:    
-                os.remove(randomString+".class")
-            except:
-                1+1
-
-
-        out = bytes.decode(out)
-        if out != "":
-            f = open(randomString+".txt",'w')
-            f.write(out)
-            f.write("Expected output: ")
-            f.write(str(problemSet[getProblem][2][0][1]))
-            f.close()
-            f = open(randomString+".txt",'r')
-            arr = f.readlines()
-            f.close()
-            os.remove(randomString+".txt")
-            out = "/n ".join(arr)
-            #print(out.count("/n"))
-            #print(out)
-            return render_template("output.html", codeOutput=out)
-        #print(err)
-        return render_template("output.html", codeOutput=err)
+    return redirect(url_for("page404"))
 
 @app.route("/sandbox", methods=["POST","GET"])
 def sandbox():
@@ -173,10 +65,10 @@ def runSandbox():
         #get language extension
         getLanguage = request.headers["language"]
 
-        #try:
-        return render_template("output.html", codeOutput=codeRunner.runCode(getLanguage, request.get_data(), ""))
-        #except:
-        #    return render_template("output.html", codeOutput="An error occured, please try again later or if the issue persists the code broke lol. Also make sure you chose the right language.")
+        try:
+            return render_template("output.html", codeOutput=codeRunner.runCode(getLanguage, request.get_data(), "", "Sandbox"))
+        except:
+            return render_template("output.html", codeOutput="An error occured, please try again later or if the issue persists the code broke lol. Also make sure you chose the right language.")
         
         #return render_template("editor.html", content="out"+count)
 

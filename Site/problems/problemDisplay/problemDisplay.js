@@ -95,7 +95,7 @@ function update() {
   
     //update the output size
     //console.log(window.innerHeight);
-    //document.getElementById("codeExecutionOutputWrapper").style.height = (window.innerHeight-28-28-(window.innerHeight*0.66)).toString() + "px";
+    document.getElementById("codeExecutionOutputWrapper").style.height = (window.innerHeight-28-28-28-(window.innerHeight*0.66)).toString() + "px";
 }
   
 updateDisplay = setInterval(update,10);
