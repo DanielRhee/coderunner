@@ -1,4 +1,7 @@
-def runCode(lang, code, codeInput):
+import subprocess
+import os
+
+def runCode(lang, code, codeInput, filename):
     import random
     alphabet="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     randomString = ""
@@ -70,6 +73,7 @@ def runCode(lang, code, codeInput):
             1+1
 
     elif lang == "java":
+        print(randomString)
         f = open(randomString+".java","w")
         #turn binary into normal stuff and write it
         writeToFileTemp = bytes.decode(code)
@@ -98,5 +102,27 @@ def runCode(lang, code, codeInput):
         except:
             1+1
     if bytes.decode(out) != "":
-        return bytes.decode(out)
-    return bytes.decode(err)
+        #print(bytes.decode(out).split("\n"))
+        arr = bytes.decode(out).split("\n")
+        for i in range(len(arr)):
+            arr[i] = arr[i] +"\n"
+        print(arr)
+        out = "/n ".join(arr)
+        #print(out1)
+        #print("yo")
+        #arr = list(map(str,arr))
+        
+        """
+        f = open(randomString+".txt",'w')
+        f.write(bytes.decode(out))
+        f.close()
+        f = open(randomString+".txt",'r')
+        arr = f.readlines()
+        f.close()
+        print(arr)
+        os.remove(randomString+".txt")
+        out = "/n ".join(arr)
+        """
+        
+        return out.replace(randomString,filename)
+    return bytes.decode(err).replace(randomString,filename)
