@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for,render_template, request
 import subprocess
 import os
+import codeRunner
 
 app = Flask(__name__, template_folder="Site/", static_folder='/')
 
@@ -58,8 +59,9 @@ def runProblemNoJudging():
 
             #print(str(problemSet[getProblem][2][0]))
             result = subprocess.Popen(["python3", randomString +".py"], stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-            print(''.join(list(map(str,problemSet[getProblem][2][0][0]))).encode())
-            result.stdin.write(''.join(list(map(str,problemSet[getProblem][2][0][0]))).encode())
+            #print(''.join(list(map(str,problemSet[getProblem][2][0][0]))).encode())
+            result.stdin.write(''.join(list(map(str,problemSet["TwoSum"][2][0][0]))).encode())
+            #result.stdin.write(''.join(list(map(str,problemSet[getProblem][2][0][0]))).encode())
             out, err = result.communicate()
 
             #process = subprocess.Popen("python3 " + randomString +".py", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -87,7 +89,10 @@ def runProblemNoJudging():
             errcode = process.returncode   
             """
             os.remove(randomString+".cpp") 
-            os.remove(randomString)
+            try:
+                os.remove(randomString)
+            except: 
+                1+1
 
         elif getLanguage == "c":
             f = open(randomString+".c","w")
@@ -105,7 +110,10 @@ def runProblemNoJudging():
             out, err = process.communicate()"""
             errcode = process.returncode   
             os.remove(randomString+".c") 
-            os.remove(randomString)
+            try:
+                os.remove(randomString)
+            except: 
+                1+1
 
         elif getLanguage == "java":
             f = open(randomString+".java","w")
@@ -142,7 +150,7 @@ def runProblemNoJudging():
             f = open(randomString+".txt",'w')
             f.write(out)
             f.write("Expected output: ")
-            f.write(problemSet[getProblem][2][0][1])
+            f.write(str(problemSet[getProblem][2][0][1]))
             f.close()
             f = open(randomString+".txt",'r')
             arr = f.readlines()
@@ -151,9 +159,9 @@ def runProblemNoJudging():
             out = "/n ".join(arr)
             #print(out.count("/n"))
             #print(out)
-            return render_template("output.html", codeOutput=out.replace(randomString,"TwoSum"))
+            return render_template("output.html", codeOutput=out.replace(randomString,getProblem))
         #print(err)
-        return render_template("output.html", codeOutput=bytes.decode(err).replace(randomString,"TwoSum"))
+        return render_template("output.html", codeOutput=bytes.decode(err).replace(randomString,getProblem))
 
 @app.route("/sandbox", methods=["POST","GET"])
 def sandbox():
@@ -200,7 +208,9 @@ def runSandbox():
             out, err = process.communicate()
             errcode = process.returncode   
             os.remove(randomString+".cpp") 
-            os.remove(randomString)
+            try:
+                os.remove(randomString)
+            except: 1+1
 
         elif getLanguage == "c":
             f = open(randomString+".c","w")
@@ -215,7 +225,10 @@ def runSandbox():
             out, err = process.communicate()
             errcode = process.returncode   
             os.remove(randomString+".c") 
-            os.remove(randomString)
+            try:
+                os.remove(randomString)
+            except: 
+                1+1
 
         elif getLanguage == "java":
             f = open(randomString+".java","w")
@@ -268,9 +281,7 @@ def page404():
 if __name__ == "__main__":
     #Problems
     global problemSet
-    problemSet = {"TwoSum":["Given an array of numbers and a target, find two numbers in the array that add up to the target and return their indicies. You can assume there is exactly 1 solution. Use STDIN for input and use STDOUT for output","def twoSum(target,arr):", [["2 3 4 5 6 7 8 \n5",0]]]}
+    problemSet = {"TwoSum":["Given an array of numbers and a target, find two numbers in the array that add up to the target and return their indicies. You can assume there is exactly 1 solution. Use STDIN for input and use STDOUT for output","def twoSum(target,arr):", [["2 3 4 5 6 7 8 \n5",5]]]}
     #Format "Problem name":[Problem text, starting code, [[testcase1input, testcase1output], [testcase2input, testcase2output]]]
     
-    
-    print(problemSet["TwoSum"][2][0][0])
-    #app.run(port=5500, debug=True)
+    app.run(port=5500, debug=True)
