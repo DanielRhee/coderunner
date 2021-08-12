@@ -5,6 +5,10 @@ editor.setShowPrintMargin(false);
 
 var currentLanguage = "python"
 
+function startEnvironment() {
+    changeLanguage();
+}
+
 function executeCode() {
     let codeContent = editor.getSession().getValue();
 
@@ -32,18 +36,54 @@ function executeCode() {
 }
 
 function changeLanguage() {
+    function IsNullOrWhiteSpace( value) {
+        if (value== null){
+            return true;
+        } 
+        return value.replace(/\s/g, '').length == 0;
+    }
+    function IsHelloWorld( value ) {
+        if (value == `#include <iostream> \nint main()\n{\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`) {
+            return true;
+        }
+        if (value == `#include <stdio.h>\nint main() \n{\n    printf("Hello, World!");\n    return 0;\n}`) {
+            return true;
+        }
+        if (value == `if __name__ == "__main__":\n    print("Hello, World!")`) {
+            return true;
+        }
+        if (value == `class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}`) {
+            return true;
+        }
+        return false;
+    }
+
     currentLanguage =  document.getElementById("languageSelector").value
     if (currentLanguage == "cpp") {
         editor.session.setMode("ace/mode/c_cpp");
+        
+        if (IsNullOrWhiteSpace(editor.getValue()) || IsHelloWorld(editor.getValue())) {
+            editor.setValue(`#include <iostream> \nint main()\n{\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`);
+        }
     }
     if (currentLanguage == "c") {
         editor.session.setMode("ace/mode/c_cpp");
+        if (IsNullOrWhiteSpace(editor.getValue()) || IsHelloWorld(editor.getValue())) {
+            editor.setValue(`#include <stdio.h>\nint main() \n{\n    printf("Hello World!");\n    return 0;\n}`);
+        }
     }
     if (currentLanguage == "python") {
         editor.session.setMode("ace/mode/python");
+        if (IsNullOrWhiteSpace(editor.getValue()) || IsHelloWorld(editor.getValue())) {
+            editor.setValue(`if __name__ == "__main__":\n    print("hello")`);
+        }
     }
     if (currentLanguage == "java") {
         editor.session.setMode("ace/mode/java");
+
+        if (IsNullOrWhiteSpace(editor.getValue()) || IsHelloWorld(editor.getValue())) {
+            editor.setValue(`class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, World!");\n    }\n}`);
+        }
     }
 }
 
