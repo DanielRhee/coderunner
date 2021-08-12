@@ -18,21 +18,35 @@ def problem(problemName):
 @app.route("/submitProblemForJudging", methods=["POST","GET"])
 def submitProblemForJudging():
     if request.method == "POST":
+        global problemSet
         getLanguage = request.headers["language"]
         getProblem = request.headers["problemName"]
-       
-        import random
-        alphabet="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        randomString = ""
-        for i in range(50):
-            randomString += alphabet[random.randint(0,len(alphabet)-1)]
         #get the data and store it
         clientCode = request.get_data()
 
-        
+        try:
+            for i in range(len(problemSet[getProblem][2])):
+                runCode = codeRunner.runCode(getLanguage, request.get_data() , ''.join(list(map(str,problemSet[getProblem][2][i][0]))), getProblem)
 
-    return render_template("output.html", codeOutput="lol")
-    #return render_template("output.html", codeOutput=out.replace(randomString,"filename"))
+                temp1 = str("".join(str(runCode).split())).replace("/n", "")
+                temp2 = str("".join(str(problemSet[getProblem][2][i][1]).split())).replace("/n", "")
+                print(len(temp1),len(temp2))
+                temp3 = open("testing.txt",'w')
+                temp3.write(temp1)
+                temp3.write(temp2)
+
+                if "".join(str(runCode).split()).replace("/n", "") != "".join(str(problemSet[getProblem][2][i][1]).split()).replace("/n", ""):
+                    return render_template("output.html", codeOutput="Incorrect answer ✖️ /n Testcase: /n" + str(problemSet[getProblem][2][i][0]) + "/nExpected answer: /n" + str(problemSet[getProblem][2][i][1]) + "/nYour answer: /n" + str(runCode))
+            return render_template("output.html", codeOutput="All Correct! ✔️")
+        except Exception as e:
+            print(e)
+            return render_template("output.html", codeOutput="An error occured, please try again later or if the issue persists the code broke lol. Also make sure you chose the right language.")
+        
+        return render_template("output.html", codeOutput="An error occured, please try again later or if the issue persists the code broke lol. Also make sure you chose the right language.")
+        
+        #return render_template("editor.html", content="out"+count)
+
+    return redirect(url_for("page404"))
 
 
 @app.route("/runProblemNoJudging", methods = ["POST", "GET"])
@@ -81,7 +95,7 @@ def page404():
 if __name__ == "__main__":
     #Problems
     global problemSet
-    problemSet = {"TwoSum":["Given an array of numbers and a target, find two numbers in the array that add up to the target and return their indicies. You can assume there is exactly 1 solution. Use STDIN for input and use STDOUT for output","def twoSum(target,arr):", [["2 3 4 5 6 7 8 \n5",5]]]}
+    problemSet = {"TwoSum":["Given an array of numbers and a target, find two numbers in the array that add up to the target and return the sum of their indicies. You can assume there is exactly 1 solution. Use STDIN for input and use STDOUT for output","def twoSum(target,arr):", [["2 7 11 15 \n9",1],["3 2 4 \n6",3],["3 3 \n6",1]]]}
     #Format "Problem name":[Problem text, starting code, [[testcase1input, testcase1output], [testcase2input, testcase2output]]]
     
     app.run(port=5500, debug=True)
