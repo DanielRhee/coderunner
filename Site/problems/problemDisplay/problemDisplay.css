@@ -32,6 +32,12 @@
     font-size: 36px;
     margin-left: 50px;
 }
+#resizeButton {
+    position: absolute;
+    right: 0;
+    height: 100%;
+}
+
   
 #main {
     transition: margin-left .5s;
@@ -113,4 +119,11 @@
     overflow:scroll;
     color: white;
 
+}
+
+#clearCodeOutput {
+    position:fixed;
+    right:0;
+    background: none; 
+    border: none; 
 }

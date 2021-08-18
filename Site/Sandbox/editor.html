@@ -16,7 +16,8 @@
             
             <div id="row">
                 <div class="column">
-                    <p>File name for later</p>
+                    <input type="text" id="fileName" size="20">  
+                    <p style="font-size: 6px; color:red;" id="fileNameAlert"></p>
                 </div>
                 <div class="column">
                     <div id="executeCodeWrapper">
@@ -36,8 +37,6 @@
                     </div>
                 </div>
             </div>
-
-
             
         </div>
         <div id="editorWrapper">
@@ -45,8 +44,8 @@
         </div>
         
     
-
-        <div id="codeExecutionOutputWrapper"><p id="codeExecutionOutput">Code output:</p></div> 
+        <button id="clearCodeOutput" onclick="clearCodeOutput()">&nbsp;🗑️</button>
+        <div id="codeExecutionOutputWrapper"><p>Code output: &nbsp;</p><p id="codeExecutionOutput"></p></div> 
         
         <script src="Site/aceEditor/ace.js" type="text/javascript" charset="utf-8"></script>
         <script src="Site/Sandbox/editor.js"></script>

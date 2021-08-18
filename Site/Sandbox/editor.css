@@ -32,6 +32,12 @@
     border: 0%;
 }
 
+#fileName {
+    height: 10px;
+    background:lightgray;
+    color: #4b4b4b;
+}
+
 #languageSelectWrapper {
     float: right;
     padding-top: 0%;
@@ -64,4 +70,12 @@
     overflow:scroll;
     color: white;
 
+}
+
+
+#clearCodeOutput {
+    position:fixed;
+    right:0;
+    background: none; 
+    border: none; 
 }

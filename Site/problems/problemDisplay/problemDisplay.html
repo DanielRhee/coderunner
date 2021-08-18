@@ -8,13 +8,17 @@
         <link rel="stylesheet" href="../Site/problems/problemDisplay/problemDisplay.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     </head>
-    <body style="background-color:#4b4b4b;" onload="startEnvironment()">
+    <body style="background-color:#4b4b4b;" onload="startEnvironment()" id="bodyOfAllContent">
 
         <div id="header"> Ripoff Replit/codiva </div>
         
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <p id="problemStatement" style="color:white; padding:3%;">{{problemName}} <br><br><br> {{problemText}}</p>
+            <button type="button" onmousedown="resizeButtonDown()"" id="resizeButton" >!</button>
+            <div style="padding-right: 5%;">
+                <p id="problemStatement" style="color:white; padding-left:3%; padding-right:3%; white-space: normal;">{{problemName}} <br><br><br> {{problemText}}</p>
+            </div>
+            
         </div>
 
         
@@ -55,8 +59,8 @@
             </div>
             
         
-    
-            <div id="codeExecutionOutputWrapper"><p id="codeExecutionOutput">Code output: &nbsp; </p></div> 
+            <button id="clearCodeOutput" onclick="clearCodeOutput()">&nbsp;🗑️</button>
+            <div id="codeExecutionOutputWrapper"><p>Code output: &nbsp; </p><p id="codeExecutionOutput"></p></div> 
             
         </div>
         

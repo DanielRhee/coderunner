@@ -36,13 +36,13 @@ def submitProblemForJudging():
                 temp3.write(temp2)
 
                 if "".join(str(runCode).split()).replace("/n", "") != "".join(str(problemSet[getProblem][2][i][1]).split()).replace("/n", ""):
-                    return render_template("output.html", codeOutput="Incorrect answer ✖️ /n Testcase: /n" + str(problemSet[getProblem][2][i][0]) + "/nExpected answer: /n" + str(problemSet[getProblem][2][i][1]) + "/nYour answer: /n" + str(runCode))
-            return render_template("output.html", codeOutput="All Correct! ✔️")
+                    return render_template("output.html", codeOutput="Incorrect answer ❌ /n Testcase: /n" + str(problemSet[getProblem][2][i][0]).replace("\n","/n") + "/nExpected answer: /n" + str(problemSet[getProblem][2][i][1]) + "/nYour answer: /n" + str(runCode))
+            return render_template("output.html", codeOutput="All Correct! ✅")
         except Exception as e:
             print(e)
             return render_template("output.html", codeOutput="An error occured, please try again later or if the issue persists the code broke lol. Also make sure you chose the right language.")
         
-        return render_template("output.html", codeOutput="An error occured, please try again later or if the issue persists the code broke lol. Also make sure you chose the right language.")
+        #return render_template("output.html", codeOutput="An error occured, please try again later or if the issue persists the code broke lol. Also make sure you chose the right language.")
         
         #return render_template("editor.html", content="out"+count)
 
@@ -79,8 +79,10 @@ def runSandbox():
         #get language extension
         getLanguage = request.headers["language"]
 
+        getFileName = request.headers["fileName"]
+
         try:
-            return render_template("output.html", codeOutput=codeRunner.runCode(getLanguage, request.get_data(), "", "Sandbox"))
+            return render_template("output.html", codeOutput=codeRunner.runCode(getLanguage, request.get_data(), "", getFileName))
         except:
             return render_template("output.html", codeOutput="An error occured, please try again later or if the issue persists the code broke lol. Also make sure you chose the right language.")
         
