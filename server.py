@@ -3,6 +3,18 @@ import codeRunner
 
 app = Flask(__name__, template_folder="Site/", static_folder='/')
 
+@app.before_request
+def clear_trailing():
+    from flask import redirect, request
+
+    rp = request.path 
+    if rp != '/' and rp.endswith('/'):
+        return redirect(rp[:-1])
+
+@app.errorhandler(404)
+def not_found(e):
+    return redirect(url_for("page404"))
+
 #Pages
 @app.route("/problems")
 def problems():
@@ -94,6 +106,12 @@ def runSandbox():
 def page404():
     return "<h1>Oops the page you're looking for does not exist</h1>"
 
+"""@app.errorhandler(404)
+def not_found(e):
+    if request.path.endswith("/") and request.path[:-1] in all_endpoints:
+        return redirect(request.path[:-1]), 302
+    return redirect(url_for("page404"))"""
+
 if __name__ == "__main__":
     #Problems
     global problemSet
@@ -101,3 +119,4 @@ if __name__ == "__main__":
     #Format "Problem name":[Problem text, starting code, [[testcase1input, testcase1output], [testcase2input, testcase2output]]]
     
     app.run(port=5500, debug=True)
+    app.url_map.strict_slashes = False
